@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('email');
+            $table->text('description')->nullable();
+            $table->string('status')->default('pending');
+            $table->integer('assigned_to')->nullable();
+            $table->integer('time_spent')->default(0);
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('tasks');
     }
 };
