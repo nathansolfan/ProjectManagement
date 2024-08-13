@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -11,7 +12,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('clients.index', compact('clients'));
+        // retrive $clients from database and pass to the view
+        $clients = Client::all();
+        return view('clients.index', ['clients' => $clients]);
     }
 
     /**
@@ -27,7 +30,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'string|required|max:255',
+            'email' => 'string|email|required|unique:clients',
+        ]);
+
+        Client::create($request->all());
+
+        return redirect()->route('clients.index')->with('Success', 'Client created with success');
     }
 
     /**
@@ -35,7 +45,8 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        return view('clients.show', compact('client'));
     }
 
     /**
@@ -43,7 +54,7 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -51,7 +62,18 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'string|required|max:255',
+            'email' => 'string|email|required|unique:clients,email,' . $id,
+        ]);
+
+        // Manually retrieve the client by ID
+        $client = Client::findOrFail($id);
+
+        // UPDATE
+        $client->update($request->only('name', 'email'));
+
+        return redirect()->route('clients.show', $client->id)->with('success', 'Client updated with success');
     }
 
     /**
@@ -59,6 +81,8 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->delete();
+        return redirect()->route('clients.index')->with('success', 'Client deleted with success');
     }
 }
