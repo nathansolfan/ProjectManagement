@@ -1,5 +1,3 @@
-<!-- resources/views/projects/create.blade.php -->
-
 <x-layout title="Create Project">
     <h1>Create a New Project</h1>
     <form action="{{ route('projects.store') }}" method="POST">
@@ -11,6 +9,14 @@
         <div>
             <label for="description">Project Description:</label>
             <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="client_id">Client:</label>
+            <select id="client_id" name="client_id" required>
+                {{-- @foreach($clients as $client)
+                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                @endforeach --}}
+            </select>
         </div>
         <button type="submit">Create Project</button>
     </form>

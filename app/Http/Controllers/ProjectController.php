@@ -33,10 +33,11 @@ class ProjectController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'client_id' => 'required|exists:clients,id'
         ]);
 
         // create new project
-        Project::create($request->only('name', 'description'));
+        Project::create($request->only('name', 'description', 'client_id'));
 
         return redirect()->route('projects.index')->with('success', 'Project created with success');
     }

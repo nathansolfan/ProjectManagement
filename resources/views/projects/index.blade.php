@@ -6,7 +6,7 @@
     <ul>
         @foreach($projects as $project)
             <li>
-                <strong>{{ $project->name }}</strong>: {{ $project->description }}
+                <strong>{{ $project->name }}</strong>: {{ $project->description }} {{ $project->client_id}}
                 <a href="{{ route('projects.show', $project->id) }}">View Details</a>
             </li>
         @endforeach
