@@ -30,13 +30,17 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => '',
-            'description' => '',
-            'status' => '',
-            'assigned_to' => '',
-            '' => '',
-            '' => '',
-        ])
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:pending,in_progress,completed',
+            'assigned_to' => 'nullable|integer|exist:users,id',
+            'time_spent' => 'nullable|integer|min:0',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+
+        Task::create($request->all());
+
+        redirect()->route('task.index')->with('success', 'task created with success');
     }
 
     /**
@@ -44,7 +48,9 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        return view('clients.show', compact('task'));
     }
 
     /**
@@ -52,7 +58,7 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('clients.show', compact('task'));
     }
 
     /**
@@ -60,7 +66,29 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // validate data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:pending,in_progress,completed',
+            'assigned_to' => 'nullable|integer|exist:users,id',
+            'time_spent' => 'nullable|integer|min:0',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+
+        // find the ID
+        $task = Task::findOrFail($id);
+
+        // Set each attribute explicitly
+        // $task->name = $request->input('name');
+        // $task->description = $request->input('description')......
+
+        // update
+        $task->update($request->all());
+
+        return redirect()->route('task.show', $task->id)->with('success', 'Task updated with success');
+
+
     }
 
     /**
@@ -68,6 +96,8 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::findOrfail($id);
+        $task->delete();
+        return redirect()->route('task.index')->with('success', 'Task deleted successfully');
     }
 }
