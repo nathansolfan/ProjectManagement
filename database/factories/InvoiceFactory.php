@@ -6,9 +6,9 @@ use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invoice>
  */
-class ProjectFactory extends Factory
+class InvoiceFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,9 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(),
-            'description' => fake()->paragraph(),
-            'client_id' => Client::factory()
+            'client_id' => Client::factory(),
+            'total_hours' => fake()->numberBetween(10,100),
+            'amount_due' => fake()->randomFloat(2,100,1000),
         ];
     }
 }

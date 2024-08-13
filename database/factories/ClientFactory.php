@@ -17,7 +17,8 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->sentence(),
+            'email' => fake()->unique()->companyEmail(),
         ];
     }
 }
