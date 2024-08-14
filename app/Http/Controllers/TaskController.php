@@ -22,7 +22,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $projects = Project::all();
+        return view('tasks.create', compact('projects'));
     }
 
     /**
@@ -40,6 +41,7 @@ class TaskController extends Controller
         ]);
 
         Task::create($request->all());
+
 
         redirect()->route('tasks.index')->with('success', 'task created with success');
     }
