@@ -87,8 +87,6 @@ class TaskController extends Controller
         $task->update($request->all());
 
         return redirect()->route('task.show', $task->id)->with('success', 'Task updated with success');
-
-
     }
 
     /**
