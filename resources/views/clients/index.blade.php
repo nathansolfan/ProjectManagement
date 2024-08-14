@@ -23,4 +23,13 @@
                             <a href="{{ route('clients.show', $client->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md">
                                 View Details
                             </a>
-                            <a href="{{ route('clients.edit', $client
+                            <a href="{{ route('clients.edit', $client->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded shadow-md">
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+</x-layout>

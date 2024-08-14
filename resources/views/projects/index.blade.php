@@ -6,9 +6,13 @@
             <div class="text-gray-600">
                 <p class="text-lg">Total Projects: {{ $projects->count() }}</p>
             </div>
+            <a href="{{ url('/') }}" class="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
+                + HomePage
+            </a>
             <a href="{{ route('projects.create') }}" class="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
                 + Create New Project
             </a>
+
         </div>
 
         <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
