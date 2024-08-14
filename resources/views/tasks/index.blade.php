@@ -1,17 +1,40 @@
 <x-layout title="Tasks">
 
-    <h1>Tasks</h1>
-    <a href="{{ route('tasks.create') }}" class="btn btn-primary">Create Task</a>
-    <ul>
-        @foreach($tasks as $task)
-            <li>
-                <strong>{{ $task->name }}</strong>: {{ $task->description }} (Status: {{ $task->status }})
-                <br>
-                <small>Project: {{ $task->project->name }}</small>
-                <a href="{{ route('tasks.show', $task->id) }}">View Details</a>
-                <a href="{{ route('tasks.edit', $task->id) }}">Edit</a>
-            </li>
-        @endforeach
-    </ul>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Tasks</h1>
+
+        <div class="mb-6 flex justify-end">
+            <a href="{{ route('tasks.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Create Task
+            </a>
+        </div>
+
+        <ul class="space-y-4">
+            @foreach($tasks as $task)
+                <li class="bg-white shadow-md rounded-lg p-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900">{{ $task->name }}</h2>
+                            <p class="text-gray-600">{{ $task->description }}</p>
+                            <p class="text-sm text-gray-500 mt-2">
+                                <span class="font-bold">Status:</span> {{ $task->status }}
+                            </p>
+                            <p class="text-sm text-gray-500">
+                                <span class="font-bold">Project:</span> {{ $task->project->name }}
+                            </p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="{{ route('tasks.show', $task->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                View Details
+                            </a>
+                            <a href="{{ route('tasks.edit', $task->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    </div>
 
 </x-layout>
