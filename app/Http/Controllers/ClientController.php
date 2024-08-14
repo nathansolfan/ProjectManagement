@@ -30,12 +30,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'string|required|max:255',
             'email' => 'string|email|required|unique:clients',
         ]);
 
-        Client::create($request->all());
+        Client::create($validatedData);
 
         return redirect()->route('clients.index')->with('success', 'Client created with success');
     }
