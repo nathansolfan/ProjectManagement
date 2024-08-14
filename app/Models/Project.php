@@ -20,9 +20,10 @@ class Project extends Model
         'client_id',
     ];
 
-    public function projects()
+    // Define relationship to Project model - HAS MANY
+    public function task()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Task::class);
     }
 
 }

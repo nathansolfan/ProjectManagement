@@ -16,8 +16,8 @@
         <ul>
             <li><a href="{{ route('projects.index') }}">Manage Projects</a></li>
             <li><a href="{{ route('clients.index') }}">Manage Clients</a></li>
-            {{-- <li><a href="{{ route('tasks.index') }}">Manage Tasks</a></li>
-            <li><a href="{{ route('invoices.index') }}">Manage Invoices</a></li> --}}
+            <li><a href="{{ route('tasks.index') }}">Manage Tasks</a></li>
+            {{-- <li><a href="{{ route('invoices.index') }}">Manage Invoices</a></li>  --}}
         </ul>
 
         <h2>Getting Started</h2>
@@ -25,9 +25,9 @@
         <ul>
             <li><a href="{{ route('projects.create') }}">Create a New Project</a></li>
             <li><a href="{{ route('clients.create') }}">Add a New Client</a></li>
-            {{-- <li><a href="{{ route('tasks.create') }}">Create a New Task</a></li>
-            <li><a href="{{ route('invoices.create') }}">Generate a New Invoice</a></li>
-        </ul> --}}
+            <li><a href="{{ route('tasks.create') }}">Create a New Task</a></li>
+            {{-- <li><a href="{{ route('invoices.create') }}">Generate a New Invoice</a></li> --}}
+        </ul>
     </div>
 </body>
 </html>

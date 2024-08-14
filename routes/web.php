@@ -11,6 +11,6 @@ Route::get('/', function () {
 });
 
 Route::resource('projects', ProjectController::class);
-Route::resource('task', TaskController::class);
+Route::resource('tasks', TaskController::class);
 Route::resource('clients', ClientController::class);
 Route::resource('invoice', InvoiceController::class);

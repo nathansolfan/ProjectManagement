@@ -17,4 +17,10 @@ class Task extends Model
         'time_spent',
         'project_id',
     ];
+
+    // Define relationship to Project model - BELONGSTO
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
