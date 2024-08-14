@@ -14,7 +14,7 @@ class ClientController extends Controller
     {
         // retrive $clients from database and pass to the view
         $clients = Client::all();
-        return view('clients.index', ['clients' => $clients]);
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -54,6 +54,7 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
+        $client = Client::findOrfail($id);
         return view('clients.edit', compact('client'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -33,14 +34,14 @@ class TaskController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|string|in:pending,in_progress,completed',
-            'assigned_to' => 'nullable|integer|exist:users,id',
+            'assigned_to' => 'nullable|integer|exists:users,id',
             'time_spent' => 'nullable|integer|min:0',
             'project_id' => 'required|exists:projects,id',
         ]);
 
         Task::create($request->all());
 
-        redirect()->route('task.index')->with('success', 'task created with success');
+        redirect()->route('tasks.index')->with('success', 'task created with success');
     }
 
     /**
@@ -50,7 +51,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        return view('clients.show', compact('task'));
+        return view('tasks.show', compact('task'));
     }
 
     /**
@@ -58,7 +59,9 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        return view('clients.show', compact('task'));
+        $task = Task::findOrFail($id);
+        $projects = Project::all();
+        return view('tasks.edit', compact('task', 'projects'));
     }
 
     /**
@@ -71,7 +74,7 @@ class TaskController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|string|in:pending,in_progress,completed',
-            'assigned_to' => 'nullable|integer|exist:users,id',
+            'assigned_to' => 'nullable|integer|exists:users,id',
             'time_spent' => 'nullable|integer|min:0',
             'project_id' => 'required|exists:projects,id',
         ]);
@@ -86,7 +89,7 @@ class TaskController extends Controller
         // update
         $task->update($request->all());
 
-        return redirect()->route('task.show', $task->id)->with('success', 'Task updated with success');
+        return redirect()->route('tasks.show', $task->id)->with('success', 'Task updated with success');
     }
 
     /**
@@ -96,6 +99,6 @@ class TaskController extends Controller
     {
         $task = Task::findOrfail($id);
         $task->delete();
-        return redirect()->route('task.index')->with('success', 'Task deleted successfully');
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
 }
