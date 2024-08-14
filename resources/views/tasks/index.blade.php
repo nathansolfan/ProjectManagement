@@ -3,7 +3,11 @@
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Tasks</h1>
 
-        <div class="mb-6 flex justify-end">
+        <div class="flex justify-between items-center mb-8">
+            <a href="{{ url('/') }}" class="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
+                + HomePage
+            </a>
+
             <a href="{{ route('tasks.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Create Task
             </a>

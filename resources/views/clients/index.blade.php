@@ -8,6 +8,9 @@
             <div class="text-gray-600">
                 <p class="text-lg">Total Clients: {{ $clients->count() }}</p>
             </div>
+            <a href="{{ url('/') }}" class="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
+                + HomePage
+            </a>
             <a href="{{ route('clients.create') }}" class="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
                 + Create New Client
             </a>
