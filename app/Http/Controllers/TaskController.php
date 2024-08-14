@@ -22,6 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
+        // list of projects need to be fetched in the task, so its passed into compact
         $projects = Project::all();
         return view('tasks.create', compact('projects'));
     }
