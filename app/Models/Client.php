@@ -15,7 +15,7 @@ class Client extends Model
     ];
 
 
-    public function client()
+    public function projects()
     {
         return $this->belongsTo(Project::class);
     }

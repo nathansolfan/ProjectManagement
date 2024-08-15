@@ -28,6 +28,10 @@
                     <a href="{{ route('invoices.index') }}" class="text-blue-600 font-semibold text-2xl">Manage Invoices</a>
                     <p class="text-gray-600 mt-4">Generate and track invoices for your projects and clients effortlessly.</p>
                 </li> --}}
+                <li class="bg-gray-100 hover:bg-gray-200 p-6 rounded-lg shadow-lg transition-all duration-300">
+                    <a href="{{ route('users.index') }}" class="text-blue-600 font-semibold text-2xl">Users</a>
+                    <p class="text-gray-600 mt-4">Users</p>
+                </li>
             </ul>
         </div>
 

@@ -21,7 +21,7 @@ class Project extends Model
     ];
 
     // Define relationship to Project model - HAS MANY
-    public function task()
+    public function tasks()
     {
         return $this->hasMany(Task::class);
     }
