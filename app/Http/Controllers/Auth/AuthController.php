@@ -16,6 +16,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    // validate() the data with an array. User::create() the $user
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -39,8 +40,38 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    // show Login Form
     public function showLoginForm()
     {
         return view('auth.login');
     }
+
+    // Handle Login
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        }
+
+        // Auth failed
+        return back()->withErrors([
+            'emaiil' => 'The provided credentials do not match man',
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+
+
+
+
 }
