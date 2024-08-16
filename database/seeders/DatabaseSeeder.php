@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,16 +17,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // Create 1 admin
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Create 9 users
+        User::factory(9)->create(); // These will have the 'user' role by default from the factory
 
-        Client::factory(10)->create()->each(function ($client) {
-            Project::factory(3)->create(['client_id' => $client->id])->each(function ($project) {
-                Task::factory(5)->create(['project_id' => $project->id]);
+        // Seed clients, projects, and tasks
+        Client::factory(3)->create()->each(function ($client) {
+            Project::factory(2)->create(['client_id' => $client->id])->each(function ($project) {
+                Task::factory(4)->create(['project_id' => $project->id]);
             });
         });
     }
