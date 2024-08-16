@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -13,8 +14,13 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        if (Auth::user()->role === 'admin') {
+            $tasks = Task::all();
+        } else {
+            $tasks = Task::where('assigned_to', Auth::id())->get();
+        }
         return view('tasks.index', compact('tasks'));
+
     }
 
     /**
@@ -104,3 +110,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
 }
+
+
+// $tasks = Task::all();
+// return view('tasks.index', compact('tasks'));
