@@ -9,7 +9,7 @@
 
     <div class="container mx-auto py-16 px-6 space-y-16">
         <!-- Authentication Section -->
-        <div class="text-center">
+        <div class="text-center space-x-4">
             @if(Auth::check())
                 <p class="text-gray-800">Welcome, {{ Auth::user()->name }}!</p>
                 <form action="{{ route('logout') }}" method="POST">
