@@ -23,7 +23,7 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Admin-only Routes
-Route::middleware('role:admin')->group(function () {
+Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('tasks', TaskController::class);
     Route::resource('clients', ClientController::class);
@@ -33,7 +33,7 @@ Route::middleware('role:admin')->group(function () {
 
 // User Routes
 
-Route::middleware('role:admin')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         $myTasks = \App\Models\Task::where('assigned_to', Auth::id())->get();
         $myProjects = \App\Models\Project::whereHas('tasks', function($query) {

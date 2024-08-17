@@ -31,7 +31,10 @@ class DatabaseSeeder extends Seeder
         // Seed clients, projects, and tasks
         Client::factory(3)->create()->each(function ($client) {
             Project::factory(2)->create(['client_id' => $client->id])->each(function ($project) {
-                Task::factory(4)->create(['project_id' => $project->id]);
+                Task::factory(4)->create([
+                    'project_id' => $project->id,
+                    'assigned_to' => User::inRandomOrder()->first()->id,
+                ]);
             });
         });
     }
