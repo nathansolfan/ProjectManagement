@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         });
         return view('users.dashboard', compact('myTasks', 'myProjects'));
     })->name('dashboard');
+    Route::get('profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::put('profile/update', [UserController::class,'updateProfile'])->name('profile.update');
 
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
     Route::resource('projects', ProjectController::class)->only(['index', 'show']);

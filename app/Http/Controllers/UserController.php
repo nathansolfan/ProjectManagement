@@ -73,7 +73,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         // If the user is editing their own profile, override the ID with their own ID
-        if (Auth::id() == $id || Auth::user()->role === 'user') {
+        if (Auth::id() == $id || Auth::user()->role === 'user' || $id === null) {
             $user = Auth::user();
         } else {
             $user = User::findOrFail($id);
@@ -88,7 +88,7 @@ class UserController extends Controller
     {
         // If the user is updating their own profile, override the ID with their own ID
 
-        if (Auth::id() == $id || Auth::user()->role === 'user') {
+        if (Auth::id() == $id || Auth::user()->role === 'user' || $id === null) {
             $user = Auth::user();
         } else {
             $user = User::findOrFail($id);
@@ -97,17 +97,18 @@ class UserController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'string|required|max:255',
-            'email' => 'string|required|email|max:255|unique:users,email,',
+            'email' => 'string|required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:5|confirmed', // Password is nullable if not provided
         ]);
 
         // Update PW if provided
         if ($request->filled('password')) {
             $validatedData['password'] = Hash::make($request->password);
-        } else {
-            // If no password is provided, remove it from the data so it doesn’t overwrite the existing password
-            unset($validatedData['password']);
         }
+        // else {
+        //     // If no password is provided, remove it from the data so it doesn’t overwrite the existing password
+        //     unset($validatedData['password']);
+        // }
 
         $user->update($validatedData);
 
