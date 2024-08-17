@@ -12,19 +12,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('projects', ProjectController::class);
-Route::resource('tasks', TaskController::class);
-Route::resource('clients', ClientController::class);
-Route::resource('invoice', InvoiceController::class);
-Route::resource('users', UserController::class);
-
-
 // Authentication Routes
-
 Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [AuthController::class, 'register']);
-
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
-
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+
+// Admin-only Routes
+Route::middleware('role:admin')->group(function () {
+    Route::resource('projects', ProjectController::class);
+    Route::resource('tasks', TaskController::class);
+    Route::resource('clients', ClientController::class);
+    Route::resource('invoice', InvoiceController::class);
+    Route::resource('users', UserController::class);
+});
+
+// User Routes
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::resource('tasks', TaskController::class)->only(['index', 'show']);
+    Route::resource('projects', TaskController::class)->only(['index', 'show']);
+
+});
+
+
+
+
+
