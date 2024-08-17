@@ -55,8 +55,16 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+            $user = Auth::user();
+
+            // redirect
+            if ($user->role === 'admin') {
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('dashboard');
+            }
         }
 
         // Auth failed

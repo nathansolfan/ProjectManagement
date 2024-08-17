@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
 
 // Authentication Routes
 Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
@@ -24,6 +25,7 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin-only Routes
 Route::middleware(['auth','role:admin'])->group(function () {
+    Route::view('home', 'welcome')->name('home'); // Admin welcome page
     Route::resource('projects', ProjectController::class);
     Route::resource('tasks', TaskController::class);
     Route::resource('clients', ClientController::class);
