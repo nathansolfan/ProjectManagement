@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
     Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 
+    // Allow users to edit their own profile
+
+
 });
 
 

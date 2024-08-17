@@ -101,9 +101,6 @@ class UserController extends Controller
             'password' => 'nullable|string|min:5|confirmed', // Password is nullable if not provided
         ]);
 
-        // find ID
-        $user = User::findOrfail($id);
-
         // Update PW if provided
         if ($request->filled('password')) {
             $validatedData['password'] = Hash::make($request->password);
