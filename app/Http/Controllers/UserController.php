@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function dashboard()
+    {
+        $myTasks = Task::where('assigned_to', Auth::id())->get();
+        $myProjects = Project::where('tasks', function ($query) {
+            $query->where('assigned_to', Auth::id());
+        })->get();
+
+        return view('users.dashboard', compact('myTasks', 'myProjects'));
+    }
     /**
      * Display a listing of the resource.
      */
