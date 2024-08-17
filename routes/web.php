@@ -28,7 +28,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('tasks', TaskController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('invoice', InvoiceController::class);
-    Route::resource('users', UserController::class)->except(['edit', 'update', 'show']);
+    Route::resource('users', UserController::class);
 });
 
 // User Routes

@@ -157,7 +157,7 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('/')->with('success', 'Profiled Updated okayy');
+        return redirect()->route('profile.edit')->with('success', 'Profiled Updated okayy');
 
 
     }
