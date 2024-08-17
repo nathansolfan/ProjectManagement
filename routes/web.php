@@ -32,7 +32,6 @@ Route::middleware(['auth','role:admin'])->group(function () {
 });
 
 // User Routes
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         $myTasks = \App\Models\Task::where('assigned_to', Auth::id())->get();
@@ -44,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
     Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+
 });
 
 

@@ -62,7 +62,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // find ID
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -70,7 +72,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // If the user is editing their own profile, override the ID with their own ID
+        if (Auth::id() == $id || Auth::user()->role === 'user') {
+            $user = Auth::user();
+        } else {
+            $user = User::findOrFail($id);
+        }
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -78,7 +86,35 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // If the user is updating their own profile, override the ID with their own ID
+
+        if (Auth::id() == $id || Auth::user()->role === 'user') {
+            $user = Auth::user();
+        } else {
+            $user = User::findOrFail($id);
+        }
+
+
+        $validatedData = $request->validate([
+            'name' => 'string|required|max:255',
+            'email' => 'string|required|email|max:255|unique:users,email,',
+            'password' => 'nullable|string|min:5|confirmed', // Password is nullable if not provided
+        ]);
+
+        // find ID
+        $user = User::findOrfail($id);
+
+        // Update PW if provided
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        } else {
+            // If no password is provided, remove it from the data so it doesn’t overwrite the existing password
+            unset($validatedData['password']);
+        }
+
+        $user->update($validatedData);
+
+        return redirect()->route('users.index')->with('success', 'User updated okay');
     }
 
     /**
@@ -86,6 +122,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrfail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted bokay');
     }
 }
