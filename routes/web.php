@@ -6,6 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,11 +34,15 @@ Route::middleware('role:admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $myTasks = \App\Models\Task::where('assigned_to', Auth::id())->get();
+        $myProjects = \App\Models\Project::whereHas('tasks', function($query) {
+            $query->where('assigned_to', Auth::id());
+        });
+        return view('users.dashboard', compact('myTasks', 'myProjects'));
     })->name('dashboard');
 
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
-    Route::resource('projects', TaskController::class)->only(['index', 'show']);
+    Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 
 });
 
