@@ -28,7 +28,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::resource('tasks', TaskController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('invoice', InvoiceController::class);
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->except(['edit', 'update', 'show']);
 });
 
 // User Routes
@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('profile/update', [UserController::class,'updateProfile'])->name('profile.update');
 
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
     Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 

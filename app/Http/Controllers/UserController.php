@@ -25,8 +25,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        if (Auth::user()->role === 'admin') {
+            // Admin sees all
+            $users = User::all();
+            return view('users.index', compact('users'));
+        } else {
+            // Regular user their own profile
+            return redirect()->route('profile.edit');
+        }
     }
 
     /**
@@ -70,7 +76,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = null)
     {
         // If the user is editing their own profile, override the ID with their own ID
         if (Auth::id() == $id || Auth::user()->role === 'user' || $id === null) {
@@ -123,5 +129,36 @@ class UserController extends Controller
         $user = User::findOrfail($id);
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted bokay');
+    }
+
+
+    // EDITPROFILE
+
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
+    }
+
+    // UPDATEPROFIEL
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validatedData = $request->validate([
+            'name' => 'string|required|max:255',
+            'email' => 'string|required|email|max:255|unique:users,email' . $user->id,
+            'password' => 'nullable|string|min:5|confirmed',
+        ]);
+
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($validatedData);
+
+        return redirect()->route('/')->with('success', 'Profiled Updated okayy');
+
+
     }
 }
