@@ -20,7 +20,6 @@ class TaskController extends Controller
             $tasks = Task::where('assigned_to', Auth::id())->get();
         }
         return view('tasks.index', compact('tasks'));
-
     }
 
     /**

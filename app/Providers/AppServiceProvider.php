@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\CheckRole;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(Router $router): void
     {
-        //
+        $router->aliasMiddleware('role', CheckRole::class);
     }
 }
