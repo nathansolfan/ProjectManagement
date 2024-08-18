@@ -10,7 +10,8 @@
                 <li class="flex justify-between items-center mb-2">
                     <span>{{ $task->name }} - {{ $task->status }}</span>
                     @if($task->status !== 'completed')
-                        <form action="{{ route('tasks.complete', $task->id) }}" method="POST">
+                    {{-- task.complete from the route ->name() --}}
+                        <form action="{{ route('tasks.complete', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to make this change?')">
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
