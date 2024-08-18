@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         });
         return view('users.dashboard', compact('myTasks', 'myProjects'));
     })->name('dashboard');
+
+    // Allow users to edit their own profile
     Route::get('profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('profile/update', [UserController::class,'updateProfile'])->name('profile.update');
 
@@ -49,7 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', TaskController::class)->only(['index', 'show']);
     Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 
-    // Allow users to edit their own profile
+    // inside [ pass the function markAs... from the controller ]
+    Route::patch('tasks/{task}/complete', [TaskController::class, 'markAsComplete'])->name('tasks.complete');
+
+
 
 
 });

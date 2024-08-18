@@ -108,6 +108,20 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
+
+    public function markAsComplete(Task $task)
+    {
+        // user has to be auth to mark complete
+        if ($task->assigned_to != Auth::id()) {
+            return redirect()->back()->with('errors', 'You are not authrozied');
+        }
+
+        // update task to "completed"
+        $task->status = 'completed';
+        $task->save();
+
+        return redirect()->back()->with('success', 'Task marked as completed');
+    }
 }
 
 
