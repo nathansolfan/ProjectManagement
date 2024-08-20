@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'casa')->name('casa');
 
 Route::get('/test', function () {
-    return 'Test route is working!';
+    return 'Test route is workinggggg!';
 });
 
 // Authentication Routes
