@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::view('/', 'home')->name('home');
 
-
+Route::get('/test', function () {
+    return 'Test route is working!';
+});
 
 // Authentication Routes
 Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
