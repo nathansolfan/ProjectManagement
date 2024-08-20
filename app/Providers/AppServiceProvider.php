@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Middleware\CheckRole;
+use App\View\Components\Layout;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('role', CheckRole::class);
 
         // Register Blade components
-        Blade::component('layout', \App\View\Components\Layout::class);
+        Blade::component('layout', Layout::class);
     }
 }
