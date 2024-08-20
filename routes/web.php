@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return redirect()->route('login');
 // });
-Route::view('/', 'home')->name('home');
+Route::view('/', 'casa')->name('casa');
 
 Route::get('/test', function () {
     return 'Test route is working!';
